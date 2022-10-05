@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+  # otel-collector:
+  #   image: otel/opentelemetry-collector
+  #   command: [ "--config=/etc/otel-collector.yaml" ]
+  #   volumes:
+  #     - ./otel-collector.multitenant.yaml:/etc/otel-collector.yaml
+  #   ports:
+  #     - "9411:9411"
+  #     - "4318:4318"
+
+  tempo:
+    image: grafana/tempo:main-0d81035
+    command: [ "-config.file=/etc/tempo.yaml" ]
+    volumes:
+      - ./tempo.yaml:/etc/tempo.yaml
+      - ./tempo-data/:/tmp/tempo
+    ports:
+      - "3200:3200"   # tempo
+      - "4317:4317"        #otlp GRPC
+      # - "9411:9411"        #zipkin
